@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 
 namespace MinecraftSettingsSaver
 {
@@ -23,47 +24,149 @@ namespace MinecraftSettingsSaver
             #region "Event Handler"
             this.Load += GUI_Load;
             SaveSettingsBtn.Click += SaveSettingsBtn_Click;
+            deleteAllProfileBtn.Click += DeleteAllProfileBtn_Click;
+            reloadToolStripMenuItem.Click += RefreshSettingsList;
+            deleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
+            LoadSettingsBtn.Click += LoadSettingsBtn_Click;
+            profilesListBox.SelectedValueChanged += ProfilesListBox_SelectedValueChanged;
             #endregion
         }
 
-        private void SaveSettingsBtn_Click(object sender, EventArgs e)
+        private void ProfilesListBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            SettingsListBox.Items.Add("Test");
-            RefreshSettingsList();
+            if (profilesListBox.SelectedItems.Count > 0) { LoadSettingsBtn.Enabled = true; }
         }
 
-        private void GUI_Load(object sender, EventArgs e)
+        private void LoadSettingsBtn_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists(ApplicationDataDir)) { Directory.CreateDirectory(ApplicationDataDir); }
-            if(Process.GetProcessesByName("javaw").Length > 0) { MessageBox.Show("Java is running, make sure that Minecraft is closed before using the application!"); }
-            //TODO: getting all savedfile and add to the listbox
-        }
+            if(profilesListBox.SelectedIndex >= 0)
+            {
+                string profileFilePath = ApplicationDataDir + profilesListBox.SelectedItem.ToString() + ".smc";
+                if (File.Exists(profileFilePath))
+                {
+                    using (ZipArchive settingsFile = ZipFile.Open(profileFilePath, ZipArchiveMode.Read))
+                    {
+                        if (settingsFile.GetEntry("info") == null){MessageBox.Show("The selected file is not a valid minecraft settings profile.");}
 
-        private void SettingsListBox_Changed(object sender, EventArgs e)
-        {
-            if(SettingsListBox.Items.Count > 0)
-            {
-                SettingsListBox.Enabled = true;
-                ExportBtn.Enabled = true;
-            } else
-            {
-                SettingsListBox.Enabled = false;
-                ExportBtn.Enabled = false;
+                        if (MessageBox.Show("This will overwrite your current settings!\nDo you want to continue?", "Warning", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            try
+                            {
+                                File.Delete(MinecraftPath + "options.txt");
+                                settingsFile.GetEntry("options.txt").ExtractToFile(MinecraftPath + "options.txt",true);
+                            }
+                            catch (Exception)
+                            {
+                                MessageBox.Show("An error occurred while loading the settings.\nMake sure that minecraft is closed.");
+#if DEBUG
+                                throw;
+#endif
+                            }
+                        }
+                    }
+                }
             }
         }
 
-        private void RefreshSettingsList()
+        private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(SettingsListBox.Items.Count > 0)
+            if(profilesListBox.SelectedIndex != -1)
             {
-                SettingsListBox.Enabled = true;
+                string filepath = ApplicationDataDir + profilesListBox.SelectedItem.ToString() + ".smc";
+                if (File.Exists(filepath))
+                {
+                    try
+                    {
+                        File.Delete(filepath);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Unable to remove the saved profile", "Error");
+                        return;
+                    }
+                }
+                RefreshSettingsList();
+            }
+        }
+
+        private void DeleteAllProfileBtn_Click(object sender, EventArgs e)
+        {
+            if(MessageBox.Show("Are you sure?","",MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Directory.Delete(ApplicationDataDir, true);
+                Directory.CreateDirectory(ApplicationDataDir);
+                RefreshSettingsList();
+            }
+        }
+
+        private void RefreshSettingsList(object sender = null, EventArgs e = null)
+        {
+            profilesListBox.Items.Clear();
+
+            foreach(string filename in Directory.GetFiles(ApplicationDataDir))
+            {
+                profilesListBox.Items.Add(filename.Replace(ApplicationDataDir,null).Replace(".smc",null));
+            }
+
+            if (profilesListBox.Items.Count > 0)
+            {
+                profilesListBox.Enabled = true;
                 ExportBtn.Enabled = true;
             }
             else
             {
-                SettingsListBox.Enabled = false;
+                profilesListBox.Enabled = false;
                 ExportBtn.Enabled = false;
             }
+
+        }
+
+        private void GUI_Load(object sender, EventArgs e)
+        {
+            if (Process.GetProcessesByName("javaw").Length > 0) { MessageBox.Show("Java is running, make sure that Minecraft is closed before using the application!"); }
+            if (!Directory.Exists(ApplicationDataDir)) { Directory.CreateDirectory(ApplicationDataDir); }
+            minecraftVersionCBox.SelectedIndex = 0;
+            RefreshSettingsList();
+        }
+
+        private void SaveSettingsBtn_Click(object sender, EventArgs e)
+        {
+
+            if (!File.Exists(MinecraftPath + "options.txt")){MessageBox.Show("There is no minecraft settings file, make sure that you have opened minecraft once."); return;}
+
+            if (string.IsNullOrEmpty(nomeProfiloTxbx.Text))
+            {
+                MessageBox.Show("Insert a valid name for the profile.");
+                return;
+            }
+            foreach (char item in "+ùàòè*éç°§^?'.\\/#%${}<>$!£ì;,[]:@\"")
+            {
+                if(nomeProfiloTxbx.Text.Contains(item))
+                {
+                    MessageBox.Show("Insert a valid name for the profile.");
+                    return;
+                }
+            }
+
+
+
+            string filaname = ApplicationDataDir + nomeProfiloTxbx.Text + ".smc";
+            if (File.Exists(filaname)) {
+                if(MessageBox.Show("A profile with this name already exists. Do you want to overwrite it?", "", MessageBoxButtons.YesNo) != DialogResult.Yes) { return;}
+            }
+
+
+
+            using (ZipArchive archive = new ZipArchive(File.OpenWrite(ApplicationDataDir + nomeProfiloTxbx.Text + ".smc"),ZipArchiveMode.Create))
+            {
+                using(StreamWriter writer = new StreamWriter(archive.CreateEntry("info").Open()))
+                {
+                    writer.WriteLine($"{nomeProfiloTxbx.Text}\n{minecraftVersionCBox.SelectedItem}");
+                }
+                archive.CreateEntryFromFile(MinecraftPath + "options.txt","options.txt");
+            }
+
+            RefreshSettingsList();
         }
     }
 }
