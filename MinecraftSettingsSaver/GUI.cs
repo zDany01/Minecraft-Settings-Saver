@@ -52,7 +52,6 @@ namespace MinecraftSettingsSaver
                         {
                             try
                             {
-                                File.Delete(MinecraftPath + "options.txt");
                                 settingsFile.GetEntry("options.txt").ExtractToFile(MinecraftPath + "options.txt",true);
                             }
                             catch (Exception)
