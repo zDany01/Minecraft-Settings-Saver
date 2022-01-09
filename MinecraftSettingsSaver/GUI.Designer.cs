@@ -45,6 +45,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.optifineSettingsCBox = new System.Windows.Forms.CheckBox();
             this.optifineTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.RightClickMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -108,7 +110,7 @@
             // 
             // ExportBtn
             // 
-            this.ExportBtn.Cursor = System.Windows.Forms.Cursors.No;
+            this.ExportBtn.Cursor = System.Windows.Forms.Cursors.Default;
             this.ExportBtn.Enabled = false;
             this.ExportBtn.Location = new System.Drawing.Point(12, 376);
             this.ExportBtn.Name = "ExportBtn";
@@ -119,7 +121,7 @@
             // 
             // ImportBtn
             // 
-            this.ImportBtn.Cursor = System.Windows.Forms.Cursors.No;
+            this.ImportBtn.Cursor = System.Windows.Forms.Cursors.Default;
             this.ImportBtn.Location = new System.Drawing.Point(153, 376);
             this.ImportBtn.Name = "ImportBtn";
             this.ImportBtn.Size = new System.Drawing.Size(135, 23);
@@ -198,6 +200,18 @@
             // 
             this.optifineTooltip.ToolTipTitle = "Optifine settings not found";
             // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.DefaultExt = "zip";
+            this.saveFileDialog1.Filter = "Zip file|*.zip";
+            this.saveFileDialog1.Title = "Save As...";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.DefaultExt = "zip";
+            this.openFileDialog1.Filter = "Zip file|*.zip";
+            this.openFileDialog1.Title = "Open...";
+            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -244,6 +258,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox optifineSettingsCBox;
         private System.Windows.Forms.ToolTip optifineTooltip;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 
