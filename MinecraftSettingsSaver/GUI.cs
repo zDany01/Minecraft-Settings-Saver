@@ -45,9 +45,6 @@ namespace MinecraftSettingsSaver
             {
                 if (archive.GetEntry("info") != null && new StreamReader(archive.GetEntry("info").Open()).ReadToEnd().GetHashCode() == 1446666046)
                 {
-#if DEBUG
-                    Debug.WriteLine("The archive is valid.\nStart extracting...");
-#endif
                     if(MessageBox.Show($"Profiles: {archive.Entries.Count - 1}\nIf a profile already exists it will be overwritten, continue?",null,MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No) { return; }
 
                     foreach(ZipArchiveEntry entry in archive.Entries)
@@ -137,7 +134,7 @@ if you wanna import manually the profiles, copy all files(except this one) to th
 
         private void DeleteAllProfileBtn_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("Are you sure?","Choose wisely",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes)
+            if(MessageBox.Show("Are you sure?","Choose Wisely",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 Directory.Delete(ApplicationDataDir, true);
                 Directory.CreateDirectory(ApplicationDataDir);
@@ -174,9 +171,6 @@ if you wanna import manually the profiles, copy all files(except this one) to th
             minecraftVersionCBox.SelectedIndex = 0;
             if (File.Exists(MinecraftPath + "optionsof.txt") && File.Exists(MinecraftPath + "optionsshaders.txt")) { optifineSettingsCBox.Cursor = Cursors.Default; optifineTooltip.RemoveAll(); allowOptifineSettings = true; }
             RefreshSettingsList();
-            Debug.WriteLine(@"#################################################################################################################################
-This is a simple file to let the program understand that the packageder in your.minecraft path.|
-#################################################################################################################################".GetHashCode());
         }
 
         private void SaveSettingsBtn_Click(object sender, EventArgs e)
