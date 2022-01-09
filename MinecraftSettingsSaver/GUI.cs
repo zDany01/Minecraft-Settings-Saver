@@ -17,6 +17,7 @@ namespace MinecraftSettingsSaver
     {
         static string MinecraftPath = Environment.GetEnvironmentVariable("appdata") + "\\.minecraft\\";
         string ApplicationDataDir = MinecraftPath + "MSavedSettings\\";
+        bool allowOptifineSettings = false;
 
         public GUI()
         {
@@ -29,7 +30,13 @@ namespace MinecraftSettingsSaver
             deleteToolStripMenuItem.Click += DeleteToolStripMenuItem_Click;
             LoadSettingsBtn.Click += LoadSettingsBtn_Click;
             profilesListBox.SelectedValueChanged += ProfilesListBox_SelectedValueChanged;
+            optifineSettingsCBox.CheckedChanged += OptifineSettingsCBox_CheckedChanged;
             #endregion
+        }
+
+        private void OptifineSettingsCBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!allowOptifineSettings) { optifineSettingsCBox.Checked = false; }
         }
 
         private void ProfilesListBox_SelectedValueChanged(object sender, EventArgs e)
@@ -125,6 +132,7 @@ namespace MinecraftSettingsSaver
             if (Process.GetProcessesByName("javaw").Length > 0) { MessageBox.Show("Java is running, make sure that Minecraft is closed before using the application!"); }
             if (!Directory.Exists(ApplicationDataDir)) { Directory.CreateDirectory(ApplicationDataDir); }
             minecraftVersionCBox.SelectedIndex = 0;
+            if (File.Exists(MinecraftPath + "optionsof.txt") && File.Exists(MinecraftPath + "optionsshaders.txt")) { optifineSettingsCBox.Cursor = Cursors.Default; optifineTooltip.RemoveAll(); allowOptifineSettings = true; }
             RefreshSettingsList();
         }
 
@@ -158,13 +166,17 @@ namespace MinecraftSettingsSaver
 
             using (ZipArchive archive = new ZipArchive(File.OpenWrite(ApplicationDataDir + nomeProfiloTxbx.Text + ".smc"),ZipArchiveMode.Create))
             {
-                using(StreamWriter writer = new StreamWriter(archive.CreateEntry("info").Open()))
-                {
-                    writer.WriteLine($"{nomeProfiloTxbx.Text}\n{minecraftVersionCBox.SelectedItem}");
-                }
                 archive.CreateEntryFromFile(MinecraftPath + "options.txt","options.txt");
+                if (optifineSettingsCBox.Checked)
+                {
+                    archive.CreateEntryFromFile(MinecraftPath + "optionsof.txt", "optionsof.txt");
+                    archive.CreateEntryFromFile(MinecraftPath + "optionsshaders.txt", "optionsshaders.txt");
+                }
+                using (StreamWriter writer = new StreamWriter(archive.CreateEntry("info").Open()))
+                {
+                    writer.WriteLine($"{nomeProfiloTxbx.Text}\n{minecraftVersionCBox.SelectedItem}\n{optifineSettingsCBox.Checked}");
+                }
             }
-
             RefreshSettingsList();
         }
     }
