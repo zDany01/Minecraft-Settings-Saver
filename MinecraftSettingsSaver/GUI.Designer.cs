@@ -43,14 +43,16 @@
             this.minecraftVersionCBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.optifineSettingsCBox = new System.Windows.Forms.CheckBox();
+            this.optifineTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.RightClickMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // SaveSettingsBtn
             // 
-            this.SaveSettingsBtn.Location = new System.Drawing.Point(12, 321);
+            this.SaveSettingsBtn.Location = new System.Drawing.Point(12, 318);
             this.SaveSettingsBtn.Name = "SaveSettingsBtn";
-            this.SaveSettingsBtn.Size = new System.Drawing.Size(276, 23);
+            this.SaveSettingsBtn.Size = new System.Drawing.Size(135, 23);
             this.SaveSettingsBtn.TabIndex = 0;
             this.SaveSettingsBtn.Text = "Save current settings";
             this.SaveSettingsBtn.UseVisualStyleBackColor = true;
@@ -97,7 +99,7 @@
             // LoadSettingsBtn
             // 
             this.LoadSettingsBtn.Enabled = false;
-            this.LoadSettingsBtn.Location = new System.Drawing.Point(12, 350);
+            this.LoadSettingsBtn.Location = new System.Drawing.Point(12, 347);
             this.LoadSettingsBtn.Name = "LoadSettingsBtn";
             this.LoadSettingsBtn.Size = new System.Drawing.Size(135, 23);
             this.LoadSettingsBtn.TabIndex = 3;
@@ -106,8 +108,9 @@
             // 
             // ExportBtn
             // 
+            this.ExportBtn.Cursor = System.Windows.Forms.Cursors.No;
             this.ExportBtn.Enabled = false;
-            this.ExportBtn.Location = new System.Drawing.Point(12, 379);
+            this.ExportBtn.Location = new System.Drawing.Point(12, 376);
             this.ExportBtn.Name = "ExportBtn";
             this.ExportBtn.Size = new System.Drawing.Size(135, 23);
             this.ExportBtn.TabIndex = 4;
@@ -116,7 +119,8 @@
             // 
             // ImportBtn
             // 
-            this.ImportBtn.Location = new System.Drawing.Point(153, 379);
+            this.ImportBtn.Cursor = System.Windows.Forms.Cursors.No;
+            this.ImportBtn.Location = new System.Drawing.Point(153, 376);
             this.ImportBtn.Name = "ImportBtn";
             this.ImportBtn.Size = new System.Drawing.Size(135, 23);
             this.ImportBtn.TabIndex = 5;
@@ -125,7 +129,7 @@
             // 
             // deleteAllProfileBtn
             // 
-            this.deleteAllProfileBtn.Location = new System.Drawing.Point(153, 350);
+            this.deleteAllProfileBtn.Location = new System.Drawing.Point(153, 347);
             this.deleteAllProfileBtn.Name = "deleteAllProfileBtn";
             this.deleteAllProfileBtn.Size = new System.Drawing.Size(135, 23);
             this.deleteAllProfileBtn.TabIndex = 6;
@@ -178,11 +182,28 @@
             this.label3.TabIndex = 10;
             this.label3.Text = "Minecraft version";
             // 
+            // optifineSettingsCBox
+            // 
+            this.optifineSettingsCBox.AutoSize = true;
+            this.optifineSettingsCBox.Cursor = System.Windows.Forms.Cursors.No;
+            this.optifineSettingsCBox.Location = new System.Drawing.Point(151, 322);
+            this.optifineSettingsCBox.Name = "optifineSettingsCBox";
+            this.optifineSettingsCBox.Size = new System.Drawing.Size(137, 17);
+            this.optifineSettingsCBox.TabIndex = 11;
+            this.optifineSettingsCBox.Text = "Include optifine settings";
+            this.optifineTooltip.SetToolTip(this.optifineSettingsCBox, "The program can\'t find optifine configuration file.");
+            this.optifineSettingsCBox.UseVisualStyleBackColor = true;
+            // 
+            // optifineTooltip
+            // 
+            this.optifineTooltip.ToolTipTitle = "Optifine settings not found";
+            // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 410);
+            this.ClientSize = new System.Drawing.Size(304, 405);
+            this.Controls.Add(this.optifineSettingsCBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.minecraftVersionCBox);
@@ -221,6 +242,8 @@
         private System.Windows.Forms.ComboBox minecraftVersionCBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox optifineSettingsCBox;
+        private System.Windows.Forms.ToolTip optifineTooltip;
     }
 }
 
