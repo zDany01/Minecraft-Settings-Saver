@@ -38,6 +38,26 @@ namespace MinecraftSettingsSaver
             #endregion
         }
 
+        private void CheckIfValidZip(string filepath)
+        {
+            ZipArchive zipArchive;
+            if (File.Exists(filepath)) { zipArchive = ZipFile.OpenRead(filepath); } else return;
+            if(zipArchive.Entries.Count > 0 && zipArchive.GetEntry("info") != null)
+            {
+                string[] zipInfo = new StreamReader(zipArchive.GetEntry("info").Open()).ReadToEnd().Split("\n".ToCharArray()[0]);
+                if(zipInfo.Length > 1 && zipInfo.Length < 4)
+                {
+                    string profileName = zipInfo[0];
+                    string minecraftVersion = zipInfo[1];
+                    bool.TryParse(zipInfo[2], out bool hasOptifineSettings);
+                    Debug.WriteLine($"Name:{profileName}\nVersion:{minecraftVersion},Include optifine settings{hasOptifineSettings}");
+                }
+
+#if DEBUG
+            }
+            Debug.WriteLine($"File:\"{zipArchive}\" is not a valid file, Deleting it...");
+#endif
+        }
         private void ImportBtn_Click(object sender, EventArgs e) { openFileDialog1.ShowDialog(); }
 
         private void OpenFileDialog1_FileOk(object sender, CancelEventArgs e) {
@@ -99,11 +119,10 @@ if you wanna import manually the profiles, copy all files(except this one) to th
             if(profilesListBox.SelectedIndex >= 0)
             {
                 string profileFilePath = ApplicationDataDir + profilesListBox.SelectedItem.ToString() + ".smc";
-                if (File.Exists(profileFilePath))
+                if (File.Exists(profileFilePath)) //to remove in the future if implementing FileSystemWatcher
                 {
                     using (ZipArchive settingsFile = ZipFile.Open(profileFilePath, ZipArchiveMode.Read))
                     {
-                        if (settingsFile.GetEntry("info") == null){MessageBox.Show("The selected file is not a valid minecraft settings profile."); return; }  //to remove in the future because after the check will be done on loading so there is no need to check later if the file is valid because otherwise it will be deleted                        
                         if (confirm || MessageBox.Show("This will overwrite your current settings!\nDo you want to continue?", null, MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes) { try { settingsFile.GetEntry("options.txt").ExtractToFile(MinecraftPath + "options.txt", true); } catch (Exception) { MessageBox.Show("An error occurred while loading the settings.\nMake sure that minecraft is closed."); }}
                         MessageBox.Show("Successfully applied settings profile","Info",MessageBoxButtons.OK,MessageBoxIcon.Information);
                     }
@@ -148,7 +167,7 @@ if you wanna import manually the profiles, copy all files(except this one) to th
 
             foreach(string filename in Directory.GetFiles(ApplicationDataDir))
             {
-                profilesListBox.Items.Add(filename.Replace(ApplicationDataDir,null).Replace(".smc",null));
+                CheckIfValidZip(filename);
             }
 
             if (profilesListBox.Items.Count > 0)
