@@ -18,7 +18,6 @@ namespace MinecraftSettingsSaver
         static string MinecraftPath = Environment.GetEnvironmentVariable("appdata") + "\\.minecraft\\";
         string ApplicationDataDir = MinecraftPath + "MSavedProfiles\\";
         bool allowOptifineSettings = false;
-
         public GUI()
         {
             InitializeComponent();
@@ -40,23 +39,35 @@ namespace MinecraftSettingsSaver
 
         private void CheckIfValidZip(string filepath)
         {
-            ZipArchive zipArchive;
-            if (File.Exists(filepath)) { zipArchive = ZipFile.OpenRead(filepath); } else return;
-            if(zipArchive.Entries.Count > 0 && zipArchive.GetEntry("info") != null)
+            if (File.Exists(filepath))
             {
-                string[] zipInfo = new StreamReader(zipArchive.GetEntry("info").Open()).ReadToEnd().Split("\n".ToCharArray()[0]);
-                if(zipInfo.Length > 1 && zipInfo.Length < 4)
+                using (ZipArchive zipArchive = ZipFile.OpenRead(filepath))
                 {
-                    string profileName = zipInfo[0];
-                    string minecraftVersion = zipInfo[1];
-                    bool.TryParse(zipInfo[2], out bool hasOptifineSettings);
-                    Debug.WriteLine($"Name:{profileName}\nVersion:{minecraftVersion},Include optifine settings{hasOptifineSettings}");
-                }
-
+                    if (zipArchive.Entries.Count > 0 && zipArchive.GetEntry("info") != null)
+                    {
+                        string readedInfo = new StreamReader(zipArchive.GetEntry("info").Open()).ReadToEnd().Replace("\r", null); readedInfo = readedInfo.Remove(readedInfo.Length - 1, 1);
+                        string[] zipInfo = readedInfo.Split("\n"[0]);
+                        if (zipInfo.Length == 3)
+                        {
+                            string profileName = zipInfo[0];
+                            string minecraftVersion = zipInfo[1];
+                            string hasOptifineSettings;
+                            if (bool.TryParse(zipInfo[2], out bool _)) { hasOptifineSettings = "Yes"; } else { hasOptifineSettings = "No"; }
+                            profilesListBox.Items.Add(string.Format("{0,-44}{1,-26}{2}",profileName,minecraftVersion,hasOptifineSettings));
 #if DEBUG
-            }
-            Debug.WriteLine($"File:\"{zipArchive}\" is not a valid file, Deleting it...");
+                            Debug.WriteLine($"Name: {profileName}\nVersion: {minecraftVersion}\nInclude Optifine settings: {hasOptifineSettings}");
 #endif
+                            return;
+                        }
+
+                    }
+                }
+#if DEBUG
+                Debug.WriteLine($"File:\"{filepath}\" has been deleted because it wasn't a valid file");
+#endif
+                File.Delete(filepath);
+            } else return;
+
         }
         private void ImportBtn_Click(object sender, EventArgs e) { openFileDialog1.ShowDialog(); }
 
@@ -164,6 +175,8 @@ if you wanna import manually the profiles, copy all files(except this one) to th
         private void RefreshSettingsList(object sender = null, EventArgs e = null)
         {
             profilesListBox.Items.Clear();
+            profilesListBox.Items.Add(string.Format("{0,-40} {1,-20} {2}","Profile name","MC Version", "Optifine"));
+            
 
             foreach(string filename in Directory.GetFiles(ApplicationDataDir))
             {
