@@ -37,7 +37,7 @@ namespace MinecraftSettingsSaver
             #endregion
         }
 
-        private void CheckIfValidZip(string filepath)
+        private void CheckIfValidProfile(string filepath)
         {
             if (File.Exists(filepath))
             {
@@ -69,6 +69,7 @@ namespace MinecraftSettingsSaver
             } else return;
 
         }
+
         private void ImportBtn_Click(object sender, EventArgs e) { openFileDialog1.ShowDialog(); }
 
         private void OpenFileDialog1_FileOk(object sender, CancelEventArgs e) {
@@ -85,7 +86,7 @@ namespace MinecraftSettingsSaver
                             entry.ExtractToFile(ApplicationDataDir + entry.Name,true);
                         }
                     }
-                    MessageBox.Show($"Succefully imported {archive.Entries.Count - 1} profiles", "Info", MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    MessageBox.Show($"Successfully imported {archive.Entries.Count - 1} profiles", "Info", MessageBoxButtons.OK,MessageBoxIcon.Information);
                 } else
                 {
                     MessageBox.Show("This is not a valid profile export file.","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
@@ -145,19 +146,9 @@ if you wanna import manually the profiles, copy all files(except this one) to th
         {
             if(profilesListBox.SelectedIndex != -1)
             {
-                string filepath = ApplicationDataDir + profilesListBox.SelectedItem.ToString() + ".smc";
-                if (File.Exists(filepath))
-                {
-                    try
-                    {
-                        File.Delete(filepath);
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Unable to remove the saved profile", "Error");
-                        return;
-                    }
-                }
+                string filePath = ApplicationDataDir + profilesListBox.SelectedItem.ToString().Substring(0,profilesListBox.SelectedItem.ToString().LastIndexOf(".") - 2).Replace(" ", null) + ".smc";
+                //Need to change the method for getting the filePath because now the program can't delete a profile if it has a space in the name
+                File.Delete(filePath);                
                 RefreshSettingsList();
             }
         }
@@ -180,7 +171,7 @@ if you wanna import manually the profiles, copy all files(except this one) to th
 
             foreach(string filename in Directory.GetFiles(ApplicationDataDir))
             {
-                CheckIfValidZip(filename);
+                if (filename.EndsWith(".smc")) { CheckIfValidProfile(filename); }
             }
 
             if (profilesListBox.Items.Count > 0)
