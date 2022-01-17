@@ -23,6 +23,7 @@ namespace MinecraftSettingsSaver
             InitializeComponent();
             #region "Event Handler"
             this.Load += GUI_Load;
+            this.Icon = Properties.Resources.icon;
             SaveSettingsBtn.Click += SaveSettingsBtn_Click;
             deleteAllProfileBtn.Click += DeleteAllProfileBtn_Click;
             reloadToolStripMenuItem.Click += RefreshSettingsList;
