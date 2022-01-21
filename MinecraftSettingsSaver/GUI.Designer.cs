@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.SaveSettingsBtn = new System.Windows.Forms.Button();
+            this.SaveProfileBtn = new System.Windows.Forms.Button();
             this.profilesListBox = new System.Windows.Forms.ListBox();
             this.RightClickMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,14 +50,14 @@
             this.RightClickMenu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // SaveSettingsBtn
+            // SaveProfileBtn
             // 
-            this.SaveSettingsBtn.Location = new System.Drawing.Point(12, 318);
-            this.SaveSettingsBtn.Name = "SaveSettingsBtn";
-            this.SaveSettingsBtn.Size = new System.Drawing.Size(135, 23);
-            this.SaveSettingsBtn.TabIndex = 0;
-            this.SaveSettingsBtn.Text = "Save current settings";
-            this.SaveSettingsBtn.UseVisualStyleBackColor = true;
+            this.SaveProfileBtn.Location = new System.Drawing.Point(12, 318);
+            this.SaveProfileBtn.Name = "SaveProfileBtn";
+            this.SaveProfileBtn.Size = new System.Drawing.Size(135, 23);
+            this.SaveProfileBtn.TabIndex = 0;
+            this.SaveProfileBtn.Text = "Save current settings";
+            this.SaveProfileBtn.UseVisualStyleBackColor = true;
             // 
             // profilesListBox
             // 
@@ -228,7 +228,7 @@
             this.Controls.Add(this.LoadSettingsBtn);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.profilesListBox);
-            this.Controls.Add(this.SaveSettingsBtn);
+            this.Controls.Add(this.SaveProfileBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "GUI";
@@ -242,7 +242,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button SaveSettingsBtn;
+        private System.Windows.Forms.Button SaveProfileBtn;
         private System.Windows.Forms.ListBox profilesListBox;
         private System.Windows.Forms.ContextMenuStrip RightClickMenu;
         private System.Windows.Forms.ToolStripMenuItem reloadToolStripMenuItem;
