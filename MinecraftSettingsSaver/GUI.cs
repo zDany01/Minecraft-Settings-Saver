@@ -39,6 +39,15 @@ namespace MinecraftSettingsSaver
             #endregion
         }
 
+        public string RemoveLastSpace(string listBoxItem)
+        {
+            while (listBoxItem.EndsWith(" "))
+            {
+                listBoxItem = listBoxItem.Remove(listBoxItem.Length - 1, 1);
+            }
+            return listBoxItem;
+        }
+
         private void RefreshSettingsList(object sender = null, EventArgs e = null)
         {
             profilesListBox.Items.Clear();
@@ -156,7 +165,7 @@ if you wanna import manually the profiles, copy all files(except this one) to th
             if (Process.GetProcessesByName("javaw").Length > 0) { if (MessageBox.Show("Java is running, make sure that minecraft is not open when applying settings!\nDo you want to continue anyway?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) { confirm = true; } else { return; } }
             if (profilesListBox.SelectedIndex >= 0)
             {
-                string profileFilePath = ApplicationDataDir + profilesListBox.SelectedItem.ToString() + ".smc";
+                string profileFilePath = ApplicationDataDir + RemoveLastSpace(profilesListBox.SelectedItem.ToString().Substring(0, profilesListBox.SelectedItem.ToString().LastIndexOf(".") - 2)) + ".smc";
                 if (File.Exists(profileFilePath)) //to remove in the future if implementing FileSystemWatcher
                 {
                     using (ZipArchive settingsFile = ZipFile.Open(profileFilePath, ZipArchiveMode.Read))
@@ -173,10 +182,7 @@ if you wanna import manually the profiles, copy all files(except this one) to th
             if (profilesListBox.SelectedIndex != -1)
             {
                 string filePath = ApplicationDataDir + profilesListBox.SelectedItem.ToString().Substring(0, profilesListBox.SelectedItem.ToString().LastIndexOf(".") - 2);
-                while (filePath.EndsWith(" "))
-                {
-                    filePath = filePath.Remove(filePath.Length - 1, 1);
-                }
+                filePath = RemoveLastSpace(filePath);
                 File.Delete(filePath + ".smc");
                 RefreshSettingsList();
             }
@@ -220,7 +226,7 @@ if you wanna import manually the profiles, copy all files(except this one) to th
                     return;
                 }
             }
-            while (nomeProfiloTxbx.Text.EndsWith(" ")) { nomeProfiloTxbx.Text = nomeProfiloTxbx.Text.Remove(nomeProfiloTxbx.TextLength - 1, 1); }
+            nomeProfiloTxbx.Text = RemoveLastSpace(nomeProfiloTxbx.Text);
             #endregion
 
 
