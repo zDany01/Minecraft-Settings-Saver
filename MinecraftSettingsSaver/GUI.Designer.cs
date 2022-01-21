@@ -54,7 +54,7 @@
             // 
             this.SaveProfileBtn.Location = new System.Drawing.Point(12, 318);
             this.SaveProfileBtn.Name = "SaveProfileBtn";
-            this.SaveProfileBtn.Size = new System.Drawing.Size(135, 23);
+            this.SaveProfileBtn.Size = new System.Drawing.Size(143, 23);
             this.SaveProfileBtn.TabIndex = 0;
             this.SaveProfileBtn.Text = "Save current settings";
             this.SaveProfileBtn.UseVisualStyleBackColor = true;
@@ -67,7 +67,8 @@
             this.profilesListBox.FormattingEnabled = true;
             this.profilesListBox.Location = new System.Drawing.Point(12, 25);
             this.profilesListBox.Name = "profilesListBox";
-            this.profilesListBox.Size = new System.Drawing.Size(276, 251);
+            this.profilesListBox.ScrollAlwaysVisible = true;
+            this.profilesListBox.Size = new System.Drawing.Size(292, 251);
             this.profilesListBox.TabIndex = 1;
             // 
             // RightClickMenu
@@ -104,7 +105,7 @@
             this.LoadSettingsBtn.Enabled = false;
             this.LoadSettingsBtn.Location = new System.Drawing.Point(12, 347);
             this.LoadSettingsBtn.Name = "LoadSettingsBtn";
-            this.LoadSettingsBtn.Size = new System.Drawing.Size(135, 23);
+            this.LoadSettingsBtn.Size = new System.Drawing.Size(143, 23);
             this.LoadSettingsBtn.TabIndex = 3;
             this.LoadSettingsBtn.Text = "Load saved profile";
             this.LoadSettingsBtn.UseVisualStyleBackColor = true;
@@ -115,7 +116,7 @@
             this.ExportBtn.Enabled = false;
             this.ExportBtn.Location = new System.Drawing.Point(12, 376);
             this.ExportBtn.Name = "ExportBtn";
-            this.ExportBtn.Size = new System.Drawing.Size(135, 23);
+            this.ExportBtn.Size = new System.Drawing.Size(143, 23);
             this.ExportBtn.TabIndex = 4;
             this.ExportBtn.Text = "Export all saved profiles";
             this.ExportBtn.UseVisualStyleBackColor = true;
@@ -123,27 +124,28 @@
             // ImportBtn
             // 
             this.ImportBtn.Cursor = System.Windows.Forms.Cursors.Default;
-            this.ImportBtn.Location = new System.Drawing.Point(153, 376);
+            this.ImportBtn.Location = new System.Drawing.Point(161, 376);
             this.ImportBtn.Name = "ImportBtn";
-            this.ImportBtn.Size = new System.Drawing.Size(135, 23);
+            this.ImportBtn.Size = new System.Drawing.Size(143, 23);
             this.ImportBtn.TabIndex = 5;
             this.ImportBtn.Text = "Import profiles from file";
             this.ImportBtn.UseVisualStyleBackColor = true;
             // 
             // deleteAllProfileBtn
             // 
-            this.deleteAllProfileBtn.Location = new System.Drawing.Point(153, 347);
+            this.deleteAllProfileBtn.Location = new System.Drawing.Point(161, 347);
             this.deleteAllProfileBtn.Name = "deleteAllProfileBtn";
-            this.deleteAllProfileBtn.Size = new System.Drawing.Size(135, 23);
+            this.deleteAllProfileBtn.Size = new System.Drawing.Size(143, 23);
             this.deleteAllProfileBtn.TabIndex = 6;
             this.deleteAllProfileBtn.Text = "Delete all saved profiles";
             this.deleteAllProfileBtn.UseVisualStyleBackColor = true;
             // 
             // nomeProfiloTxbx
             // 
-            this.nomeProfiloTxbx.Location = new System.Drawing.Point(12, 295);
+            this.nomeProfiloTxbx.Location = new System.Drawing.Point(15, 295);
+            this.nomeProfiloTxbx.MaxLength = 20;
             this.nomeProfiloTxbx.Name = "nomeProfiloTxbx";
-            this.nomeProfiloTxbx.Size = new System.Drawing.Size(191, 20);
+            this.nomeProfiloTxbx.Size = new System.Drawing.Size(196, 20);
             this.nomeProfiloTxbx.TabIndex = 7;
             // 
             // minecraftVersionCBox
@@ -162,15 +164,15 @@
             "1.9",
             "1.8",
             "1.7"});
-            this.minecraftVersionCBox.Location = new System.Drawing.Point(209, 295);
+            this.minecraftVersionCBox.Location = new System.Drawing.Point(217, 295);
             this.minecraftVersionCBox.Name = "minecraftVersionCBox";
-            this.minecraftVersionCBox.Size = new System.Drawing.Size(79, 21);
+            this.minecraftVersionCBox.Size = new System.Drawing.Size(87, 21);
             this.minecraftVersionCBox.TabIndex = 8;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(71, 279);
+            this.label2.Location = new System.Drawing.Point(79, 279);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 13);
             this.label2.TabIndex = 9;
@@ -179,7 +181,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(204, 279);
+            this.label3.Location = new System.Drawing.Point(216, 279);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 13);
             this.label3.TabIndex = 10;
@@ -189,7 +191,7 @@
             // 
             this.optifineSettingsCBox.AutoSize = true;
             this.optifineSettingsCBox.Cursor = System.Windows.Forms.Cursors.No;
-            this.optifineSettingsCBox.Location = new System.Drawing.Point(151, 322);
+            this.optifineSettingsCBox.Location = new System.Drawing.Point(163, 322);
             this.optifineSettingsCBox.Name = "optifineSettingsCBox";
             this.optifineSettingsCBox.Size = new System.Drawing.Size(137, 17);
             this.optifineSettingsCBox.TabIndex = 11;
@@ -217,7 +219,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 405);
+            this.ClientSize = new System.Drawing.Size(316, 405);
             this.Controls.Add(this.optifineSettingsCBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);

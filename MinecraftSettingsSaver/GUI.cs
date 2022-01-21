@@ -24,6 +24,7 @@ namespace MinecraftSettingsSaver
             #region "Event Handler"
             this.Load += GUI_Load;
             this.Icon = Properties.Resources.icon;
+            profilesListBox.Font = new Font(FontFamily.GenericMonospace, profilesListBox.Font.Size);
             SaveProfileBtn.Click += SaveProfileBtn_Click;
             deleteAllProfileBtn.Click += DeleteAllProfileBtn_Click;
             reloadToolStripMenuItem.Click += RefreshSettingsList;
@@ -41,7 +42,7 @@ namespace MinecraftSettingsSaver
         private void RefreshSettingsList(object sender = null, EventArgs e = null)
         {
             profilesListBox.Items.Clear();
-            profilesListBox.Items.Add(string.Format("{0,-40} {1,-20} {2}", "Profile name", "MC Version", "Optifine"));
+            profilesListBox.Items.Add(string.Format("{0,-19} {1,-9} {2}", "Profile name", "MVersion", "Optifine"));
 
 
             foreach (string filename in Directory.GetFiles(ApplicationDataDir))
@@ -76,8 +77,8 @@ namespace MinecraftSettingsSaver
                         string minecraftVersion = zipInfo[1];
                         string hasOptifineSettings;
                         bool.TryParse(zipInfo[2], out bool _hasOptifineSettings);
-                        if (_hasOptifineSettings) { hasOptifineSettings = "Yes"; } else { hasOptifineSettings = "No"; }
-                        profilesListBox.Items.Add(string.Format($"{{0,{-55+profileName.Length}}}{{1,-26}}{{2}}", profileName, minecraftVersion, hasOptifineSettings));
+                        if (_hasOptifineSettings) { hasOptifineSettings = "✓"; } else { hasOptifineSettings = "✗"; }
+                        profilesListBox.Items.Add(string.Format($"{{0, -22}}{{1,-15}}{{2}}", profileName, minecraftVersion, hasOptifineSettings));
 #if DEBUG
                         Debug.WriteLine($"Name: {profileName}\nVersion: {minecraftVersion}\nInclude Optifine settings: {hasOptifineSettings}");
 #endif
