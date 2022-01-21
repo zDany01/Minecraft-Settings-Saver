@@ -63,6 +63,7 @@
             // 
             this.profilesListBox.ContextMenuStrip = this.RightClickMenu;
             this.profilesListBox.Enabled = false;
+            this.profilesListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.profilesListBox.FormattingEnabled = true;
             this.profilesListBox.Location = new System.Drawing.Point(12, 25);
             this.profilesListBox.Name = "profilesListBox";

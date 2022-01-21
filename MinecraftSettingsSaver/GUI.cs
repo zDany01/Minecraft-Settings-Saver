@@ -77,7 +77,7 @@ namespace MinecraftSettingsSaver
                         string hasOptifineSettings;
                         bool.TryParse(zipInfo[2], out bool _hasOptifineSettings);
                         if (_hasOptifineSettings) { hasOptifineSettings = "Yes"; } else { hasOptifineSettings = "No"; }
-                        profilesListBox.Items.Add(string.Format("{0,-44}{1,-26}{2}", profileName, minecraftVersion, hasOptifineSettings));
+                        profilesListBox.Items.Add(string.Format($"{{0,{-55+profileName.Length}}}{{1,-26}}{{2}}", profileName, minecraftVersion, hasOptifineSettings));
 #if DEBUG
                         Debug.WriteLine($"Name: {profileName}\nVersion: {minecraftVersion}\nInclude Optifine settings: {hasOptifineSettings}");
 #endif
