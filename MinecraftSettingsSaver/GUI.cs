@@ -24,7 +24,7 @@ namespace MinecraftSettingsSaver
             #region "Event Handler"
             this.Load += GUI_Load;
             this.Icon = Properties.Resources.icon;
-            profilesListBox.Font = new Font(FontFamily.GenericMonospace, profilesListBox.Font.Size);
+            profilesListBox.Font = new Font(FontFamily.GenericMonospace, profilesListBox.Font.Size, FontStyle.Bold);
             SaveProfileBtn.Click += SaveProfileBtn_Click;
             deleteAllProfileBtn.Click += DeleteAllProfileBtn_Click;
             reloadToolStripMenuItem.Click += RefreshSettingsList;
@@ -206,7 +206,7 @@ if you wanna import manually the profiles, copy all files(except this one) to th
 
             if (!File.Exists(MinecraftPath + "options.txt")) { MessageBox.Show("There is no minecraft settings file, make sure that you have opened minecraft once."); return; }
 
-#region "CheckTextBoxText"
+            #region "CheckTextBoxText"
             if (string.IsNullOrEmpty(nomeProfiloTxbx.Text))
             {
                 MessageBox.Show("Insert a valid name for the profile.");
@@ -220,12 +220,12 @@ if you wanna import manually the profiles, copy all files(except this one) to th
                     return;
                 }
             }
-            while(nomeProfiloTxbx.Text.EndsWith(" ")) { nomeProfiloTxbx.Text = nomeProfiloTxbx.Text.Remove(nomeProfiloTxbx.TextLength - 1,1); }
-#endregion
+            while (nomeProfiloTxbx.Text.EndsWith(" ")) { nomeProfiloTxbx.Text = nomeProfiloTxbx.Text.Remove(nomeProfiloTxbx.TextLength - 1, 1); }
+            #endregion
 
 
 
-                string fileName = ApplicationDataDir + nomeProfiloTxbx.Text + ".smc";
+            string fileName = ApplicationDataDir + nomeProfiloTxbx.Text + ".smc";
             if (File.Exists(fileName) && MessageBox.Show("A profile with this name already exists. Do you want to overwrite it?", "", MessageBoxButtons.YesNo) != DialogResult.Yes) { return; }
 
 
