@@ -21,10 +21,10 @@ namespace MinecraftSettingsSaver
         public GUI()
         {
             InitializeComponent();
-            #region "Event Handler"
             this.Load += GUI_Load;
             this.Icon = Properties.Resources.icon;
             profilesListBox.Font = new Font(FontFamily.GenericMonospace, profilesListBox.Font.Size, FontStyle.Bold);
+            #region "Event Handler"
             SaveProfileBtn.Click += SaveProfileBtn_Click;
             deleteAllProfileBtn.Click += DeleteAllProfileBtn_Click;
             reloadToolStripMenuItem.Click += RefreshSettingsList;
@@ -187,19 +187,22 @@ if you wanna import manually the profiles, copy all files(except this one) to th
                 {
                     using (ZipArchive settingsFile = ZipFile.Open(profileFilePath, ZipArchiveMode.Read))
                     {
-                        if (confirm || MessageBox.Show("This will overwrite your current settings!\nDo you want to continue?", null, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
-                            try {
+                        if (confirm || MessageBox.Show("This will overwrite your current settings!\nDo you want to continue?", null, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            try
+                            {
                                 settingsFile.GetEntry("options.txt").ExtractToFile(MinecraftPath + "options.txt", true);
                                 string readedInfo = new StreamReader(settingsFile.GetEntry("info").Open()).ReadToEnd().Replace("\r", null); readedInfo = readedInfo.Remove(readedInfo.Length - 1, 1);
                                 bool.TryParse(readedInfo.Split("\n"[0])[2], out bool hasOptifineSettings);
                                 if (hasOptifineSettings)
                                 {
-                                    settingsFile.GetEntry("optionsof.txt").ExtractToFile(MinecraftPath + "optionsof.txt");
-                                    settingsFile.GetEntry("optionsshaders.txt").ExtractToFile(MinecraftPath + "optionsshaders.txt");
+                                    settingsFile.GetEntry("optionsof.txt").ExtractToFile(MinecraftPath + "optionsof.txt", true);
+                                    settingsFile.GetEntry("optionsshaders.txt").ExtractToFile(MinecraftPath + "optionsshaders.txt", true);
                                 }
-                            } catch (Exception)
-                            { 
-                            MessageBox.Show("An error occurred while loading the settings.\nMake sure that minecraft is closed.");
+                            }
+                            catch (Exception)
+                            {
+                                MessageBox.Show("An error occurred while loading the settings.\nMake sure that minecraft is closed.");
                             }
                         }
                         MessageBox.Show("Successfully applied settings profile", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
