@@ -203,7 +203,14 @@ if you wanna import manually the profiles, copy all files(except this one) to th
             if (Process.GetProcessesByName("javaw").Length > 0) { MessageBox.Show("Java is running, make sure that Minecraft is closed before using the application!"); }
             if (!Directory.Exists(ApplicationDataDir)) { Directory.CreateDirectory(ApplicationDataDir); }
             minecraftVersionCBox.SelectedIndex = 0;
-            if (File.Exists(MinecraftPath + "optionsof.txt") && File.Exists(MinecraftPath + "optionsshaders.txt")) { optifineSettingsCBox.Cursor = Cursors.Default; optifineTooltip.RemoveAll(); allowOptifineSettings = true; }
+            //if (File.Exists(MinecraftPath + "optionsof.txt") && File.Exists(MinecraftPath + "optionsshaders.txt")) { optifineSettingsCBox.Cursor = Cursors.Default; optifineTooltip.RemoveAll(); allowOptifineSettings = true; }
+            if(File.Exists(MinecraftPath + "optionsof.txt"))
+            {
+                if(!File.Exists(MinecraftPath + "optionsshaders.txt")) { File.Create(MinecraftPath + "optionsshaders.txt"); }
+                optifineSettingsCBox.Cursor = Cursors.Default;
+                optifineTooltip.RemoveAll();
+                allowOptifineSettings = true;
+            }
             RefreshSettingsList();
         }
 

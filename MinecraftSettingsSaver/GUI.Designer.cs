@@ -142,10 +142,10 @@
             // 
             // nomeProfiloTxbx
             // 
-            this.nomeProfiloTxbx.Location = new System.Drawing.Point(15, 295);
+            this.nomeProfiloTxbx.Location = new System.Drawing.Point(12, 295);
             this.nomeProfiloTxbx.MaxLength = 20;
             this.nomeProfiloTxbx.Name = "nomeProfiloTxbx";
-            this.nomeProfiloTxbx.Size = new System.Drawing.Size(196, 20);
+            this.nomeProfiloTxbx.Size = new System.Drawing.Size(199, 20);
             this.nomeProfiloTxbx.TabIndex = 7;
             // 
             // minecraftVersionCBox
