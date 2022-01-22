@@ -39,7 +39,24 @@ namespace MinecraftSettingsSaver
             #endregion
         }
 
-        public string RemoveLastSpace(string listBoxItem)
+        private void CheckOptifine()
+        {
+            if (File.Exists(MinecraftPath + "optionsof.txt"))
+            {
+                if (!File.Exists(MinecraftPath + "optionsshaders.txt")) { File.Create(MinecraftPath + "optionsshaders.txt").Close(); }
+                optifineSettingsCBox.Cursor = Cursors.Default;
+                optifineTooltip.RemoveAll();
+                allowOptifineSettings = true;
+            }
+            else
+            {
+                optifineSettingsCBox.Cursor = Cursors.No;
+                optifineTooltip.SetToolTip(optifineSettingsCBox, "The program can't find optifine configuration file.");
+                allowOptifineSettings = false;
+            }
+        }
+
+        private string RemoveLastSpace(string listBoxItem)
         {
             while (listBoxItem.EndsWith(" "))
             {
@@ -170,9 +187,24 @@ if you wanna import manually the profiles, copy all files(except this one) to th
                 {
                     using (ZipArchive settingsFile = ZipFile.Open(profileFilePath, ZipArchiveMode.Read))
                     {
-                        if (confirm || MessageBox.Show("This will overwrite your current settings!\nDo you want to continue?", null, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) { try { settingsFile.GetEntry("options.txt").ExtractToFile(MinecraftPath + "options.txt", true); } catch (Exception) { MessageBox.Show("An error occurred while loading the settings.\nMake sure that minecraft is closed."); } }
+                        if (confirm || MessageBox.Show("This will overwrite your current settings!\nDo you want to continue?", null, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
+                            try {
+                                settingsFile.GetEntry("options.txt").ExtractToFile(MinecraftPath + "options.txt", true);
+                                string readedInfo = new StreamReader(settingsFile.GetEntry("info").Open()).ReadToEnd().Replace("\r", null); readedInfo = readedInfo.Remove(readedInfo.Length - 1, 1);
+                                bool.TryParse(readedInfo.Split("\n"[0])[2], out bool hasOptifineSettings);
+                                if (hasOptifineSettings)
+                                {
+                                    settingsFile.GetEntry("optionsof.txt").ExtractToFile(MinecraftPath + "optionsof.txt");
+                                    settingsFile.GetEntry("optionsshaders.txt").ExtractToFile(MinecraftPath + "optionsshaders.txt");
+                                }
+                            } catch (Exception)
+                            { 
+                            MessageBox.Show("An error occurred while loading the settings.\nMake sure that minecraft is closed.");
+                            }
+                        }
                         MessageBox.Show("Successfully applied settings profile", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                    CheckOptifine();
                 }
             }
         }
@@ -203,14 +235,7 @@ if you wanna import manually the profiles, copy all files(except this one) to th
             if (Process.GetProcessesByName("javaw").Length > 0) { MessageBox.Show("Java is running, make sure that Minecraft is closed before using the application!"); }
             if (!Directory.Exists(ApplicationDataDir)) { Directory.CreateDirectory(ApplicationDataDir); }
             minecraftVersionCBox.SelectedIndex = 0;
-            //if (File.Exists(MinecraftPath + "optionsof.txt") && File.Exists(MinecraftPath + "optionsshaders.txt")) { optifineSettingsCBox.Cursor = Cursors.Default; optifineTooltip.RemoveAll(); allowOptifineSettings = true; }
-            if(File.Exists(MinecraftPath + "optionsof.txt"))
-            {
-                if(!File.Exists(MinecraftPath + "optionsshaders.txt")) { File.Create(MinecraftPath + "optionsshaders.txt"); }
-                optifineSettingsCBox.Cursor = Cursors.Default;
-                optifineTooltip.RemoveAll();
-                allowOptifineSettings = true;
-            }
+            CheckOptifine();
             RefreshSettingsList();
         }
 
