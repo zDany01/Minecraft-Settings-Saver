@@ -39,7 +39,7 @@
             this.ExportBtn = new System.Windows.Forms.Button();
             this.ImportBtn = new System.Windows.Forms.Button();
             this.deleteAllProfileBtn = new System.Windows.Forms.Button();
-            this.nomeProfiloTxbx = new System.Windows.Forms.TextBox();
+            this.profileNameTxbx = new System.Windows.Forms.TextBox();
             this.minecraftVersionCBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -140,18 +140,19 @@
             this.deleteAllProfileBtn.Text = "Delete all saved profiles";
             this.deleteAllProfileBtn.UseVisualStyleBackColor = true;
             // 
-            // nomeProfiloTxbx
+            // profileNameTxbx
             // 
-            this.nomeProfiloTxbx.Location = new System.Drawing.Point(12, 295);
-            this.nomeProfiloTxbx.MaxLength = 20;
-            this.nomeProfiloTxbx.Name = "nomeProfiloTxbx";
-            this.nomeProfiloTxbx.Size = new System.Drawing.Size(199, 20);
-            this.nomeProfiloTxbx.TabIndex = 7;
+            this.profileNameTxbx.Location = new System.Drawing.Point(12, 295);
+            this.profileNameTxbx.MaxLength = 20;
+            this.profileNameTxbx.Name = "profileNameTxbx";
+            this.profileNameTxbx.Size = new System.Drawing.Size(199, 20);
+            this.profileNameTxbx.TabIndex = 7;
             // 
             // minecraftVersionCBox
             // 
             this.minecraftVersionCBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.minecraftVersionCBox.Items.AddRange(new object[] {
+            "1.19",
             "1.18",
             "1.17",
             "1.16",
@@ -199,10 +200,6 @@
             this.optifineTooltip.SetToolTip(this.optifineSettingsCBox, "The program can\'t find optifine configuration file.");
             this.optifineSettingsCBox.UseVisualStyleBackColor = true;
             // 
-            // optifineTooltip
-            // 
-            this.optifineTooltip.ToolTipTitle = "Optifine settings not found";
-            // 
             // saveProfilesDialog
             // 
             this.saveProfilesDialog.DefaultExt = "zip";
@@ -225,7 +222,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.minecraftVersionCBox);
-            this.Controls.Add(this.nomeProfiloTxbx);
+            this.Controls.Add(this.profileNameTxbx);
             this.Controls.Add(this.deleteAllProfileBtn);
             this.Controls.Add(this.ImportBtn);
             this.Controls.Add(this.ExportBtn);
@@ -256,7 +253,7 @@
         private System.Windows.Forms.Button ExportBtn;
         private System.Windows.Forms.Button ImportBtn;
         private System.Windows.Forms.Button deleteAllProfileBtn;
-        private System.Windows.Forms.TextBox nomeProfiloTxbx;
+        private System.Windows.Forms.TextBox profileNameTxbx;
         private System.Windows.Forms.ComboBox minecraftVersionCBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
