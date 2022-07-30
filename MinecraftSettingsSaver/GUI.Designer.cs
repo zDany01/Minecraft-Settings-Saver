@@ -45,8 +45,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.optifineSettingsCBox = new System.Windows.Forms.CheckBox();
             this.optifineTooltip = new System.Windows.Forms.ToolTip(this.components);
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveProfilesDialog = new System.Windows.Forms.SaveFileDialog();
+            this.importProfilesDialog = new System.Windows.Forms.OpenFileDialog();
             this.RightClickMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -181,7 +181,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(216, 279);
+            this.label3.Location = new System.Drawing.Point(217, 279);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 13);
             this.label3.TabIndex = 10;
@@ -193,9 +193,9 @@
             this.optifineSettingsCBox.Cursor = System.Windows.Forms.Cursors.No;
             this.optifineSettingsCBox.Location = new System.Drawing.Point(163, 322);
             this.optifineSettingsCBox.Name = "optifineSettingsCBox";
-            this.optifineSettingsCBox.Size = new System.Drawing.Size(137, 17);
+            this.optifineSettingsCBox.Size = new System.Drawing.Size(139, 17);
             this.optifineSettingsCBox.TabIndex = 11;
-            this.optifineSettingsCBox.Text = "Include optifine settings";
+            this.optifineSettingsCBox.Text = "Include Optifine settings";
             this.optifineTooltip.SetToolTip(this.optifineSettingsCBox, "The program can\'t find optifine configuration file.");
             this.optifineSettingsCBox.UseVisualStyleBackColor = true;
             // 
@@ -203,17 +203,18 @@
             // 
             this.optifineTooltip.ToolTipTitle = "Optifine settings not found";
             // 
-            // saveFileDialog1
+            // saveProfilesDialog
             // 
-            this.saveFileDialog1.DefaultExt = "zip";
-            this.saveFileDialog1.Filter = "Zip file|*.zip";
-            this.saveFileDialog1.Title = "Save As...";
+            this.saveProfilesDialog.DefaultExt = "zip";
+            this.saveProfilesDialog.Filter = "Zip file|*.zip";
+            this.saveProfilesDialog.InitialDirectory = "Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)";
+            this.saveProfilesDialog.Title = "Save As...";
             // 
-            // openFileDialog1
+            // importProfilesDialog
             // 
-            this.openFileDialog1.DefaultExt = "zip";
-            this.openFileDialog1.Filter = "Zip file|*.zip";
-            this.openFileDialog1.Title = "Open...";
+            this.importProfilesDialog.DefaultExt = "zip";
+            this.importProfilesDialog.Filter = "Zip file|*.zip";
+            this.importProfilesDialog.Title = "Open...";
             // 
             // GUI
             // 
@@ -261,8 +262,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox optifineSettingsCBox;
         private System.Windows.Forms.ToolTip optifineTooltip;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveProfilesDialog;
+        private System.Windows.Forms.OpenFileDialog importProfilesDialog;
     }
 }
 
