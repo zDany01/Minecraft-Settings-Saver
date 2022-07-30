@@ -203,14 +203,14 @@
             // saveProfilesDialog
             // 
             this.saveProfilesDialog.DefaultExt = "zip";
-            this.saveProfilesDialog.Filter = "Zip file|*.zip";
+            this.saveProfilesDialog.Filter = "Minecraft Settings Saver Zip|*.mssz";
             this.saveProfilesDialog.InitialDirectory = "Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)";
             this.saveProfilesDialog.Title = "Save As...";
             // 
             // importProfilesDialog
             // 
             this.importProfilesDialog.DefaultExt = "zip";
-            this.importProfilesDialog.Filter = "Zip file|*.zip";
+            this.importProfilesDialog.Filter = "Minecraft Settings Saver Zip|*.mssz";
             this.importProfilesDialog.Title = "Open...";
             // 
             // GUI

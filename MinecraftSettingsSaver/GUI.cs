@@ -17,12 +17,11 @@ namespace MinecraftSettingsSaver
         private readonly string ApplicationDataDir = MinecraftPath + "MSavedProfiles\\";
         private bool allowOptifineSettings;
 
-        public GUI()
+        public GUI(string exportedProfilesFilePath)
         {
             InitializeComponent();
             this.Icon = Properties.Resources.icon;
             profilesListBox.Font = new Font(FontFamily.GenericMonospace, profilesListBox.Font.Size, FontStyle.Bold);
-
             #region "Events"
             reloadToolStripMenuItem.Click += RefreshProfilesList;
             this.Load += GUI_Load;
@@ -37,6 +36,17 @@ namespace MinecraftSettingsSaver
             optifineSettingsCBox.CheckedChanged += OptifineSettingsCBox_CheckedChanged;
             profilesListBox.SelectedValueChanged += ProfilesListBox_SelectedValueChanged;
             #endregion
+
+            if (!(exportedProfilesFilePath is null))
+            {
+                if (!(File.Exists(exportedProfilesFilePath) && exportedProfilesFilePath.EndsWith("mssz")))
+                {
+                    MessageBox.Show("This is not a valid profile export file.", APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Environment.Exit(1);
+                }
+                ImportProfilesFile(exportedProfilesFilePath);
+            }
+
         }
 
         private void CheckOptifine()
@@ -112,9 +122,9 @@ namespace MinecraftSettingsSaver
             CheckOptifine();
             RefreshProfilesList();
         }
-        private void ImportProfilesDialog_FileOk(object sender, CancelEventArgs e)
+        private void ImportProfilesFile(string filePath)
         {
-            using (ZipArchive archive = ZipFile.OpenRead(importProfilesDialog.FileName))
+            using (ZipArchive archive = ZipFile.OpenRead(filePath))
             {
                 if (archive.GetEntry("info") != null && new StreamReader(archive.GetEntry("info").Open()).ReadToEnd().GetHashCode() == INFO_MESSAGE.GetHashCode())
                 {
@@ -131,6 +141,7 @@ namespace MinecraftSettingsSaver
             }
             RefreshProfilesList();
         }
+        private void ImportProfilesDialog_FileOk(object sender, CancelEventArgs e) => ImportProfilesFile(importProfilesDialog.FileName);
         private void ImportBtn_Click(object sender, EventArgs e) => importProfilesDialog.ShowDialog();
         private void DeleteAllProfileBtn_Click(object sender, EventArgs e)
         {
